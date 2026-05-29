@@ -1,196 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18145753257"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'AW-18145753257');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Aarambh Realtors</title>
+    <title>Apex CRM - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap');
-        
+        :root {
+            --bg-color: #0b1120;
+            --surface-color: rgba(30, 41, 59, 0.7);
+            --surface-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
         }
 
         body {
-            font-family: 'Google Sans', sans-serif;
-            background: #0a0e27;
-            height: 100vh;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Glassmorphism utility */
+        .glass {
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--surface-border);
+            border-radius: 16px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            border-right: 1px solid var(--surface-border);
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(20px);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links li a:hover, .nav-links li a.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .nav-links li a.active {
+            background: var(--accent-gradient);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 400px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 14px 24px;
+            border-radius: 30px;
+            border: 1px solid var(--surface-border);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        .splash-container {
-            text-align: center;
-            animation: fadeIn 0.5s ease;
+        .avatar:hover {
+            transform: scale(1.05);
         }
 
-        .logo-wrapper {
-            position: relative;
-            display: inline-block;
+        /* Dashboard Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
         }
 
-        .splash-logo {
-            width: 200px;
-            height: 200px;
-            background: white;
-            border-radius: 50%;
-            padding: 20px;
-            box-shadow: 0 0 60px rgba(255,82,82,0.3), 0 0 100px rgba(30,136,229,0.2);
-            animation: pulse 2s ease-in-out infinite, scaleIn 0.8s ease;
-            object-fit: contain;
+        .stat-card {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .splash-text {
-            margin-top: 30px;
-            color: white;
-            font-size: 24px;
-            font-weight: 500;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            opacity: 0;
-            animation: slideUp 0.8s ease 0.5s forwards;
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
-        .splash-subtext {
-            margin-top: 10px;
-            color: #9aa5b8;
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-secondary);
             font-size: 14px;
-            letter-spacing: 2px;
-            opacity: 0;
-            animation: slideUp 0.8s ease 0.7s forwards;
         }
 
-        .loading-bar {
-            width: 200px;
-            height: 3px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
-            margin: 40px auto 0;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeIn 0.5s ease 1s forwards;
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
         }
 
-        .loading-progress {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #ff5252, #1976d2);
-            border-radius: 3px;
-            animation: loadProgress 2.5s ease-in-out forwards;
+        .trend {
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .trend.up { color: var(--success); }
+        .trend.down { color: var(--danger); }
+
+        /* Tables & Charts area */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
         }
 
-        @keyframes scaleIn {
-            0% { 
-                transform: scale(0.5); 
-                opacity: 0; 
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% { 
-                transform: scale(1); 
-                opacity: 1; 
-            }
+        .panel {
+            padding: 24px;
         }
 
-        @keyframes pulse {
-            0%, 100% { 
-                box-shadow: 0 0 60px rgba(255,82,82,0.3), 0 0 100px rgba(30,136,229,0.2);
-            }
-            50% { 
-                box-shadow: 0 0 80px rgba(255,82,82,0.5), 0 0 120px rgba(30,136,229,0.4);
-            }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .panel-title {
+            font-size: 18px;
+            font-weight: 600;
         }
 
-        @keyframes loadProgress {
-            0% { width: 0%; }
-            100% { width: 100%; }
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        /* Fade out animation */
-        .fade-out {
-            animation: fadeOut 0.5s ease forwards;
+        .data-table th, .data-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--surface-border);
         }
 
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
+        .data-table th {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14px;
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            .splash-logo {
-                width: 150px;
-                height: 150px;
-                padding: 15px;
-            }
-            
-            .splash-text {
-                font-size: 18px;
-            }
-            
-            .splash-subtext {
-                font-size: 12px;
-            }
+        .data-table tr {
+            transition: background 0.3s ease;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-active { background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .status-pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.2); }
+
+        /* Activity Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 20px;
+            bottom: -20px;
+            width: 2px;
+            background: var(--surface-border);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            margin-top: 4px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 0 4px rgba(15, 23, 42, 1);
+        }
+
+        .timeline-content h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .timeline-content p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .animated-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 40%);
+            animation: pulseBg 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseBg {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <div class="splash-container" id="splash">
-        <div class="logo-wrapper">
-            <img src="assets/logo-ar.png" alt="Aarambh Realtors" class="splash-logo">
-        </div>
-        
-        <h1 class="splash-text">Aarambh Realtors</h1>
-        <p class="splash-subtext">Building Trust, Delivering Dreams</p>
-        
-        <div class="loading-bar">
-            <div class="loading-progress"></div>
-        </div>
-    </div>
+    <div class="animated-bg"></div>
 
-    <script>
-        // Redirect to main website after 2.5 seconds
-        setTimeout(() => {
-            document.getElementById('splash').classList.add('fade-out');
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#8b5cf6" />
+                    </linearGradient>
+                </defs>
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Apex CRM
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#" class="active">Dashboard</a></li>
+            <li><a href="#">Leads & Prospects</a></li>
+            <li><a href="#">Properties</a></li>
+            <li><a href="#">Clients</a></li>
+            <li><a href="#">Analytics</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header>
+            <div>
+                <h1 style="font-size: 24px; font-weight: 600;">Welcome back, Admin</h1>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">Here's what's happening with your properties today.</p>
+            </div>
             
-            // Wait for fade out animation then redirect
-            setTimeout(() => {
-                window.location.href = 'home.html';
-            }, 500);
-        }, 2500);
-    </script>
+            <div class="search-bar">
+                <input type="text" placeholder="Search leads, properties, or clients...">
+            </div>
+
+            <div class="user-profile">
+                <div class="avatar">AR</div>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card glass">
+                <div class="stat-header">
+                    <span>Total Revenue</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <div class="stat-value">₹4.2Cr</div>
+                <div class="trend up">↑ 12.5% vs last month</div>
+            </div>
+
+            <div class="stat-card glass">
+                <div class="stat-header">
+                    <span>Active Leads</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <div class="stat-value">142</div>
+                <div class="trend up">↑ 8.2% vs last month</div>
+            </div>
+
+            <div class="stat-card glass">
+                <div class="stat-header">
+                    <span>Properties Sold</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                </div>
+                <div class="stat-value">28</div>
+                <div class="trend up">↑ 4.1% vs last month</div>
+            </div>
+
+            <div class="stat-card glass">
+                <div class="stat-header">
+                    <span>Conversion Rate</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                </div>
+                <div class="stat-value">18.4%</div>
+                <div class="trend down">↓ 1.2% vs last month</div>
+            </div>
+        </div>
+
+        <!-- Charts and Tables -->
+        <div class="content-grid">
+            <div class="panel glass">
+                <div class="panel-header">
+                    <h3 class="panel-title">Recent Deals</h3>
+                    <button style="background: rgba(255,255,255,0.1); border: none; color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer;">View All</button>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Property</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rahul Sharma</td>
+                            <td>Sunset Villas #42</td>
+                            <td>₹1.2Cr</td>
+                            <td><span class="status-badge status-active">Closed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Priya Patel</td>
+                            <td>Skyline Apartments</td>
+                            <td>₹85L</td>
+                            <td><span class="status-badge status-pending">Negotiation</span></td>
+                        </tr>
+                        <tr>
+                            <td>Amit Kumar</td>
+                            <td>Oasis Heights</td>
+                            <td>₹2.1Cr</td>
+                            <td><span class="status-badge status-pending">In Review</span></td>
+                        </tr>
+                        <tr>
+                            <td>Neha Gupta</td>
+                            <td>Palm Grove Estate</td>
+                            <td>₹1.5Cr</td>
+                            <td><span class="status-badge status-active">Closed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="panel glass">
+                <div class="panel-header">
+                    <h3 class="panel-title">Recent Activity</h3>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>New Lead Generated</h4>
+                            <p>Suresh joined via Web Form - 2 hrs ago</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Meeting Scheduled</h4>
+                            <p>Site visit with Priya at Skyline - 4 hrs ago</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Deal Closed!</h4>
+                            <p>Rahul signed the agreement - 1 day ago</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>Property Added</h4>
+                            <p>New listing: Lotus Heights - 2 days ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
