@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex CRM - Properties</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#8b5cf6" />
+                    </linearGradient>
+                </defs>
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Apex CRM
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="leads.html">Leads & Prospects</a></li>
+            <li><a href="properties.html" class="active">Properties</a></li>
+            <li><a href="clients.html">Clients</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header>
+            <div>
+                <h1 style="font-size: 24px; font-weight: 600;">Property Listings</h1>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">Manage and view your real estate portfolio.</p>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search by location, ID or name...">
+            </div>
+
+            <div class="user-profile">
+                <button class="btn btn-primary" style="margin-right: 16px;">+ Add Property</button>
+                <div class="avatar">AR</div>
+            </div>
+        </header>
+
+        <div class="property-grid">
+            <div class="property-card glass">
+                <div class="property-image" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6);">
+                    <div class="property-price">₹1.2 Cr</div>
+                </div>
+                <div class="property-details">
+                    <h3 style="font-size: 18px;">Sunset Villas #42</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Andheri West, Mumbai</p>
+                    <div class="property-meta">
+                        <span>3 BHK</span>
+                        <span>•</span>
+                        <span>1,200 sqft</span>
+                        <span>•</span>
+                        <span style="color: var(--success);">Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card glass">
+                <div class="property-image" style="background: linear-gradient(135deg, #064e3b, #10b981);">
+                    <div class="property-price">₹85 L</div>
+                </div>
+                <div class="property-details">
+                    <h3 style="font-size: 18px;">Skyline Apartments</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Borivali East, Mumbai</p>
+                    <div class="property-meta">
+                        <span>2 BHK</span>
+                        <span>•</span>
+                        <span>950 sqft</span>
+                        <span>•</span>
+                        <span style="color: var(--warning);">Negotiation</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card glass">
+                <div class="property-image" style="background: linear-gradient(135deg, #4c1d95, #8b5cf6);">
+                    <div class="property-price">₹2.1 Cr</div>
+                </div>
+                <div class="property-details">
+                    <h3 style="font-size: 18px;">Oasis Heights</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Bandra Kurla Complex, Mumbai</p>
+                    <div class="property-meta">
+                        <span>4 BHK</span>
+                        <span>•</span>
+                        <span>2,100 sqft</span>
+                        <span>•</span>
+                        <span style="color: var(--danger);">Sold</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="property-card glass">
+                <div class="property-image" style="background: linear-gradient(135deg, #7f1d1d, #ef4444);">
+                    <div class="property-price">₹1.5 Cr</div>
+                </div>
+                <div class="property-details">
+                    <h3 style="font-size: 18px;">Palm Grove Estate</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Juhu, Mumbai</p>
+                    <div class="property-meta">
+                        <span>3 BHK</span>
+                        <span>•</span>
+                        <span>1,500 sqft</span>
+                        <span>•</span>
+                        <span style="color: var(--success);">Available</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-card glass">
+                <div class="property-image" style="background: linear-gradient(135deg, #78350f, #f59e0b);">
+                    <div class="property-price">₹45 L</div>
+                </div>
+                <div class="property-details">
+                    <h3 style="font-size: 18px;">Lotus Heights</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Malad West, Mumbai</p>
+                    <div class="property-meta">
+                        <span>1 BHK</span>
+                        <span>•</span>
+                        <span>550 sqft</span>
+                        <span>•</span>
+                        <span style="color: var(--success);">Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

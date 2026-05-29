@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex CRM - Leads</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#8b5cf6" />
+                    </linearGradient>
+                </defs>
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Apex CRM
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="leads.html" class="active">Leads & Prospects</a></li>
+            <li><a href="properties.html">Properties</a></li>
+            <li><a href="clients.html">Clients</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header>
+            <div>
+                <h1 style="font-size: 24px; font-weight: 600;">Leads Pipeline</h1>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">Drag and drop leads to update their status.</p>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search leads by name or email...">
+            </div>
+
+            <div class="user-profile">
+                <button class="btn btn-primary" style="margin-right: 16px;">+ New Lead</button>
+                <div class="avatar">AR</div>
+            </div>
+        </header>
+
+        <div class="kanban-board">
+            <!-- New Leads -->
+            <div class="kanban-column">
+                <div class="kanban-header">
+                    <span>New Leads</span>
+                    <span style="background: rgba(59,130,246,0.2); padding: 2px 8px; border-radius: 12px; font-size: 12px; color: #60a5fa;">3</span>
+                </div>
+                <div class="kanban-card glass">
+                    <h4>Vikram Singh</h4>
+                    <p>Looking for a 3BHK in Andheri West. Budget ~2.5Cr.</p>
+                    <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Added 2h ago</div>
+                </div>
+                <div class="kanban-card glass">
+                    <h4>Meera Reddy</h4>
+                    <p>Interested in commercial space.</p>
+                    <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Added 5h ago</div>
+                </div>
+                <div class="kanban-card glass">
+                    <h4>Anil Kapoor</h4>
+                    <p>Wants to sell 2BHK flat.</p>
+                    <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Added 1d ago</div>
+                </div>
+            </div>
+
+            <!-- Contacted -->
+            <div class="kanban-column">
+                <div class="kanban-header">
+                    <span>Contacted</span>
+                    <span style="background: rgba(245,158,11,0.2); padding: 2px 8px; border-radius: 12px; font-size: 12px; color: #fbbf24;">2</span>
+                </div>
+                <div class="kanban-card glass">
+                    <h4>Sneha Desai</h4>
+                    <p>Shared brochure for Lotus Heights. Call back tomorrow.</p>
+                    <div style="margin-top: 8px; font-size: 12px; color: var(--warning);">Follow up: 10:00 AM</div>
+                </div>
+                <div class="kanban-card glass">
+                    <h4>Rajat Sharma</h4>
+                    <p>Site visit scheduled for Skyline.</p>
+                    <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Follow up: Friday</div>
+                </div>
+            </div>
+
+            <!-- Negotiation -->
+            <div class="kanban-column">
+                <div class="kanban-header">
+                    <span>Negotiation</span>
+                    <span style="background: rgba(139,92,246,0.2); padding: 2px 8px; border-radius: 12px; font-size: 12px; color: #a78bfa;">1</span>
+                </div>
+                <div class="kanban-card glass">
+                    <h4>Priya Patel</h4>
+                    <p>Discussing price for Skyline Apartments. Offered 80L.</p>
+                    <div style="margin-top: 8px; font-size: 12px; color: var(--success);">Hot Lead</div>
+                </div>
+            </div>
+            
+            <!-- Closed -->
+            <div class="kanban-column">
+                <div class="kanban-header">
+                    <span>Closed (Recent)</span>
+                    <span style="background: rgba(16,185,129,0.2); padding: 2px 8px; border-radius: 12px; font-size: 12px; color: #34d399;">2</span>
+                </div>
+                <div class="kanban-card glass" style="opacity: 0.7;">
+                    <h4>Rahul Sharma</h4>
+                    <p>Sunset Villas #42</p>
+                    <div style="margin-top: 8px; font-size: 12px; color: var(--success);">Closed for 1.2Cr</div>
+                </div>
+                <div class="kanban-card glass" style="opacity: 0.7;">
+                    <h4>Neha Gupta</h4>
+                    <p>Palm Grove Estate</p>
+                    <div style="margin-top: 8px; font-size: 12px; color: var(--success);">Closed for 1.5Cr</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
