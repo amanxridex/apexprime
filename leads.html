@@ -127,16 +127,68 @@
                     <div style="margin-top: 8px; font-size: 12px; color: var(--success);">Closed for 1.5Cr</div>
                 </div>
             </div>
-            </div>
         </div>
     </main>
 
+    <!-- New Lead Modal -->
+    <div class="modal-overlay" id="newLeadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Lead</h3>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="leadName">Lead Name</label>
+                <input type="text" id="leadName" placeholder="e.g. Rohan Sharma" required>
+            </div>
+            <div class="form-group">
+                <label for="leadDetails">Requirements & Details</label>
+                <textarea id="leadDetails" rows="3" placeholder="e.g. Looking for a 3BHK in Andheri West..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancelModalBtn">Cancel</button>
+                <button class="btn btn-primary bg-highlight" id="saveLeadBtn" style="color: #064e3b; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);">Save Lead</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        document.querySelector('.btn-primary').addEventListener('click', function() {
-            const name = prompt("Enter the new lead's name:");
-            if (!name) return;
+        const modal = document.getElementById('newLeadModal');
+        const openBtn = document.querySelector('.btn-primary');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelModalBtn');
+        const saveBtn = document.getElementById('saveLeadBtn');
+        const nameInput = document.getElementById('leadName');
+        const detailsInput = document.getElementById('leadDetails');
+
+        function openModal() {
+            modal.classList.add('active');
+            nameInput.focus();
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            nameInput.value = '';
+            detailsInput.value = '';
+        }
+
+        openBtn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        saveBtn.addEventListener('click', function() {
+            const name = nameInput.value.trim();
+            const details = detailsInput.value.trim();
             
-            const details = prompt("Enter lead details or requirements:");
+            if (!name) {
+                alert('Please enter a lead name');
+                nameInput.focus();
+                return;
+            }
             
             const newCard = document.createElement('div');
             newCard.className = 'kanban-card glass';
@@ -155,6 +207,8 @@
             if (countBadge) {
                 countBadge.textContent = parseInt(countBadge.textContent) + 1;
             }
+
+            closeModal();
         });
     </script>
 </body>
