@@ -63,7 +63,7 @@
                     <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Create Subadmin</h3>
                     <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.5;">Full access to system configurations, team management, and all analytics.</p>
                 </div>
-                <button class="btn btn-primary" style="margin-top: auto; width: 100%;">Create Login</button>
+                <button class="btn btn-primary" style="margin-top: auto; width: 100%;" onclick="openLoginModal('Subadmin')">Create Login</button>
             </div>
 
             <!-- Create Team Leader -->
@@ -80,7 +80,7 @@
                     <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Create Team Leader</h3>
                     <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.5;">Manage specific teams, assign leads, and monitor team performance metrics.</p>
                 </div>
-                <button class="btn btn-primary" style="margin-top: auto; width: 100%; background: linear-gradient(135deg, #8b5cf6, #d946ef);">Create Login</button>
+                <button class="btn btn-primary" style="margin-top: auto; width: 100%; background: linear-gradient(135deg, #8b5cf6, #d946ef);" onclick="openLoginModal('Team Leader')">Create Login</button>
             </div>
 
             <!-- Create Employee -->
@@ -95,9 +95,101 @@
                     <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Create Employee</h3>
                     <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.5;">Standard access to handle assigned leads, update status, and manage client follow-ups.</p>
                 </div>
-                <button class="btn btn-primary" style="margin-top: auto; width: 100%; background: linear-gradient(135deg, #10b981, #059669);">Create Login</button>
+                <button class="btn btn-primary" style="margin-top: auto; width: 100%; background: linear-gradient(135deg, #10b981, #059669);" onclick="openLoginModal('Employee')">Create Login</button>
             </div>
         </div>
     </main>
+
+    <!-- Create Login Modal -->
+    <div class="modal" id="createLoginModal">
+        <div class="modal-content glass">
+            <div class="modal-header">
+                <h3 class="modal-title" id="loginModalTitle">Create Login</h3>
+                <button class="close-modal" onclick="closeLoginModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="createLoginForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Enter full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" placeholder="Enter username" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="Enter email address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Create a strong password" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="roleSelect" disabled style="background-color: rgba(0,0,0,0.05); color: var(--text-primary); opacity: 0.8;">
+                        <option value="Subadmin">Subadmin</option>
+                        <option value="Team Leader">Team Leader</option>
+                        <option value="Employee">Employee</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn" onclick="closeLoginModal()" style="background: transparent; border: 1px solid var(--surface-border); color: var(--text-primary);">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('createLoginModal');
+        const roleSelect = document.getElementById('roleSelect');
+        const modalTitle = document.getElementById('loginModalTitle');
+
+        function openLoginModal(role) {
+            modalTitle.innerText = 'Create ' + role + ' Login';
+            roleSelect.value = role;
+            modal.classList.add('active');
+        }
+
+        function closeLoginModal() {
+            modal.classList.remove('active');
+            document.getElementById('createLoginForm').reset();
+        }
+
+        // Close on outside click
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeLoginModal();
+            }
+        }
+
+        // Handle form submission visually
+        document.getElementById('createLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.innerText = 'Creating...';
+            btn.style.opacity = '0.8';
+            
+            setTimeout(() => {
+                closeLoginModal();
+                btn.innerText = originalText;
+                btn.style.opacity = '1';
+                // Reset form
+                this.reset();
+            }, 800);
+        });
+    </script>
 </body>
 </html>
