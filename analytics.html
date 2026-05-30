@@ -3,46 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex CRM - Analytics</title>
+    <title>Apex CRM - Detailed Analytics</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .chart-placeholder {
-            width: 100%;
-            height: 300px;
-            background: rgba(0, 0, 0, 0.02);
-            border: 1px dashed rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            font-size: 14px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .bar-chart {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            width: 100%;
-            height: 100%;
-            padding: 24px;
-        }
-
-        .bar {
-            width: 40px;
-            background: var(--accent-gradient);
-            border-radius: 4px 4px 0 0;
-            transition: height 1s ease;
-        }
-    </style>
+    <!-- ApexCharts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
         if (!localStorage.getItem('isLoggedIn')) {
             window.location.href = 'login.html';
         }
     </script>
+    <style>
+        /* Specific Analytics Dashboard Styles */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid var(--surface-border);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .col-span-2 { grid-column: span 2; }
+        .col-span-3 { grid-column: span 3; }
+        .col-span-4 { grid-column: span 4; }
+
+        .stat-mini {
+            padding: 20px;
+            border-radius: 16px;
+            background: #fff;
+            border: 1px solid var(--surface-border);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .stat-mini:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .stat-mini-title {
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stat-mini-val {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .stat-mini-trend {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 20px;
+            display: inline-block;
+            width: fit-content;
+        }
+        .trend-up { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+        .trend-down { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .filters-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            background: #fff;
+            padding: 12px 24px;
+            border-radius: 16px;
+            border: 1px solid var(--surface-border);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            margin-bottom: 24px;
+        }
+        
+        .filter-select {
+            padding: 8px 16px;
+            border: 1px solid var(--surface-border);
+            border-radius: 8px;
+            font-family: inherit;
+            color: var(--text-primary);
+            background: #fafafa;
+            outline: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="animated-bg"></div>
@@ -63,7 +122,7 @@
             Apex CRM
         </div>
 
-                <ul class="nav-links">
+        <ul class="nav-links">
             <li><a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg> Dashboard</a></li>
             <li><a href="leads.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Leads & Prospects</a></li>
             <li><a href="properties.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Properties</a></li>
@@ -73,82 +132,266 @@
             <li><a href="settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Settings</a></li>
             <li><a href="create-logins.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line></svg> Create Logins</a></li>
         </ul>
+        
         <div class="logout-section" style="margin-top: auto;">
             <a href="login.html" onclick="localStorage.removeItem('isLoggedIn');" style="display: flex; align-items: center; gap: 16px; padding: 14px 20px; color: #ef4444; text-decoration: none; border-radius: 14px; font-weight: 500; transition: all 0.2s; background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.1);" onmouseover="this.style.background='rgba(239, 68, 68, 0.1)'; this.style.transform='translateY(-2px)';" onmouseout="this.style.background='rgba(239, 68, 68, 0.05)'; this.style.transform='none';">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                 Logout
             </a>
         </div>
-
     </aside>
 
     <!-- Main Content -->
     <main class="main-content">
         <header>
             <div>
-                <h1 style="font-size: 24px; font-weight: 600;">Analytics & Reports</h1>
-                <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">Monitor your CRM performance and revenue.</p>
+                <h1 style="font-size: 28px; font-weight: 700;">Command Center</h1>
+                <p style="color: var(--text-secondary); font-size: 15px; margin-top: 4px;">Advanced Analytics & 100+ Performance Metrics</p>
             </div>
             
-            <div class="user-profile">
-                <button class="btn btn-secondary" style="margin-right: 16px;">Download Report</button>
+            <div class="user-profile" style="gap: 16px;">
+                <button class="btn btn-secondary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Export PDF</button>
                 <div class="avatar">AR</div>
             </div>
         </header>
 
-        <div class="stats-grid">
-            <div class="stat-card glass">
-                <div class="stat-header">
-                    <span>Target Achieved</span>
-                </div>
-                <div class="stat-value">78%</div>
-                <div class="trend up">On track for Q3</div>
+        <!-- Filters Row -->
+        <div class="filters-row">
+            <span style="font-size: 14px; font-weight: 600; color: var(--text-secondary);">Filters:</span>
+            <select class="filter-select">
+                <option>Last 30 Days</option>
+                <option>This Quarter</option>
+                <option>Year to Date</option>
+                <option>All Time</option>
+            </select>
+            <select class="filter-select">
+                <option>All Regions</option>
+                <option>Mumbai</option>
+                <option>Delhi NCR</option>
+                <option>Bangalore</option>
+            </select>
+            <select class="filter-select">
+                <option>All Agents</option>
+                <option>Top Performers</option>
+                <option>New Recruits</option>
+            </select>
+        </div>
+
+        <!-- Micro-stats Grid (8 Cards) -->
+        <div class="analytics-grid">
+            <div class="stat-mini">
+                <div class="stat-mini-title">Target Achieved <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+                <div class="stat-mini-val">84.2%</div>
+                <div class="stat-mini-trend trend-up">↑ 6.4% vs last mo</div>
             </div>
-            <div class="stat-card glass">
-                <div class="stat-header">
-                    <span>Average Deal Size</span>
-                </div>
-                <div class="stat-value">₹1.8Cr</div>
-                <div class="trend up">↑ 5% vs last year</div>
+            <div class="stat-mini">
+                <div class="stat-mini-title">Avg Deal Size <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+                <div class="stat-mini-val">₹2.1 Cr</div>
+                <div class="stat-mini-trend trend-up">↑ 12% vs last mo</div>
             </div>
-            <div class="stat-card glass">
-                <div class="stat-header">
-                    <span>Time to Close</span>
-                </div>
-                <div class="stat-value">24 Days</div>
-                <div class="trend down">↓ 2 days improvement</div>
+            <div class="stat-mini">
+                <div class="stat-mini-title">Time to Close <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+                <div class="stat-mini-val">18 Days</div>
+                <div class="stat-mini-trend trend-up">↓ 4 days faster</div>
+            </div>
+            <div class="stat-mini">
+                <div class="stat-mini-title">Lead Velocity Rate <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div>
+                <div class="stat-mini-val">+42%</div>
+                <div class="stat-mini-trend trend-up">↑ 8% growth</div>
+            </div>
+            <div class="stat-mini">
+                <div class="stat-mini-title">Cust. Acq. Cost (CAC) <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+                <div class="stat-mini-val">₹14,500</div>
+                <div class="stat-mini-trend trend-down">↑ 2% increase</div>
+            </div>
+            <div class="stat-mini">
+                <div class="stat-mini-title">Win/Loss Ratio <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+                <div class="stat-mini-val">3.8 : 1</div>
+                <div class="stat-mini-trend trend-up">↑ 0.5 improvement</div>
+            </div>
+            <div class="stat-mini">
+                <div class="stat-mini-title">Pipeline Value <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg></div>
+                <div class="stat-mini-val">₹84 Cr</div>
+                <div class="stat-mini-trend trend-up">↑ 15% vs Q1</div>
+            </div>
+            <div class="stat-mini">
+                <div class="stat-mini-title">Churn Rate <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                <div class="stat-mini-val">1.2%</div>
+                <div class="stat-mini-trend trend-up">↓ 0.3% drop</div>
             </div>
         </div>
 
-        <div class="content-grid" style="grid-template-columns: 1fr 1fr;">
-            <div class="panel glass">
-                <div class="panel-header">
-                    <h3 class="panel-title">Revenue (Last 6 Months)</h3>
+        <!-- Main Charts Grid -->
+        <div class="analytics-grid">
+            <!-- Large Revenue Forecast -->
+            <div class="chart-card col-span-2">
+                <div class="chart-header">
+                    <h3 style="font-size: 16px; font-weight: 600;">Revenue Forecast (12 Months)</h3>
                 </div>
-                <div class="chart-placeholder">
-                    <div class="bar-chart">
-                        <div class="bar" style="height: 30%;" title="Jan"></div>
-                        <div class="bar" style="height: 50%;" title="Feb"></div>
-                        <div class="bar" style="height: 40%;" title="Mar"></div>
-                        <div class="bar" style="height: 80%;" title="Apr"></div>
-                        <div class="bar" style="height: 60%;" title="May"></div>
-                        <div class="bar" style="height: 90%;" title="Jun"></div>
-                    </div>
-                </div>
+                <div id="chartForecast" style="height: 300px;"></div>
             </div>
 
-            <div class="panel glass">
-                <div class="panel-header">
-                    <h3 class="panel-title">Lead Conversion Funnel</h3>
+            <!-- Conversion Funnel -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 style="font-size: 16px; font-weight: 600;">Conversion Funnel</h3>
                 </div>
-                <div class="chart-placeholder" style="flex-direction: column; gap: 16px;">
-                    <div style="width: 80%; height: 40px; background: rgba(59, 130, 246, 0.4); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500;">New Leads (142)</div>
-                    <div style="width: 60%; height: 40px; background: rgba(139, 92, 246, 0.5); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500;">Contacted (85)</div>
-                    <div style="width: 40%; height: 40px; background: rgba(236, 72, 153, 0.6); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500;">Negotiation (42)</div>
-                    <div style="width: 25%; height: 40px; background: rgba(16, 185, 129, 0.8); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500;">Closed (28)</div>
+                <div id="chartFunnel" style="height: 300px;"></div>
+            </div>
+
+            <!-- Pipeline by Stage -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 style="font-size: 16px; font-weight: 600;">Pipeline Breakdown</h3>
                 </div>
+                <div id="chartRadial" style="height: 300px; display: flex; justify-content: center; align-items: center;"></div>
+            </div>
+            
+            <!-- Agent Performance Radar -->
+            <div class="chart-card col-span-1">
+                <div class="chart-header">
+                    <h3 style="font-size: 16px; font-weight: 600;">Agent Performance</h3>
+                </div>
+                <div id="chartRadar" style="height: 300px;"></div>
+            </div>
+
+            <!-- Lead Source Donut -->
+            <div class="chart-card col-span-1">
+                <div class="chart-header">
+                    <h3 style="font-size: 16px; font-weight: 600;">Lead Sources</h3>
+                </div>
+                <div id="chartDonut" style="height: 300px; display: flex; justify-content: center; align-items: center;"></div>
+            </div>
+
+            <!-- Activity Heatmap -->
+            <div class="chart-card col-span-2">
+                <div class="chart-header">
+                    <h3 style="font-size: 16px; font-weight: 600;">Activity Heatmap (Calls/Meetings)</h3>
+                </div>
+                <div id="chartHeatmap" style="height: 300px;"></div>
             </div>
         </div>
+
     </main>
+
+    <!-- ApexCharts Initialization -->
+    <script>
+        const fontFamily = "'Outfit', sans-serif";
+
+        // 1. Revenue Forecast (Area Line Chart)
+        var optionsForecast = {
+            series: [{
+                name: 'Expected Revenue (Cr)',
+                data: [31, 40, 28, 51, 42, 109, 100, 120, 135, 140, 160, 190]
+            }, {
+                name: 'Actual Revenue (Cr)',
+                data: [31, 40, 28, 51, 42, 109, 100] // Only up to current month
+            }],
+            chart: { height: 300, type: 'area', toolbar: { show: false }, fontFamily: fontFamily },
+            colors: ['#8b5cf6', '#3b82f6'],
+            fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05, stops: [0, 100] } },
+            dataLabels: { enabled: false },
+            stroke: { curve: 'smooth', width: 2, dashArray: [5, 0] },
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                axisBorder: { show: false },
+                axisTicks: { show: false }
+            },
+            grid: { borderColor: 'rgba(0,0,0,0.05)', strokeDashArray: 4 },
+            legend: { position: 'top', horizontalAlign: 'right' }
+        };
+        new ApexCharts(document.querySelector("#chartForecast"), optionsForecast).render();
+
+        // 2. Conversion Funnel (Bar chart rotated)
+        var optionsFunnel = {
+            series: [{ name: 'Leads', data: [1420, 850, 420, 280, 150] }],
+            chart: { type: 'bar', height: 300, fontFamily: fontFamily, toolbar: { show: false } },
+            plotOptions: { bar: { borderRadius: 4, horizontal: true, distributed: true, barHeight: '60%' } },
+            colors: ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'],
+            dataLabels: { enabled: true, textAnchor: 'middle', style: { colors: ['#fff'] }, formatter: function (val, opt) { return val } },
+            xaxis: { categories: ['Total Leads', 'Contacted', 'Qualified', 'Negotiation', 'Closed Won'], labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+            yaxis: { labels: { style: { fontWeight: 500 } } },
+            grid: { show: false },
+            legend: { show: false }
+        };
+        new ApexCharts(document.querySelector("#chartFunnel"), optionsFunnel).render();
+
+        // 3. Pipeline Radial Bar
+        var optionsRadial = {
+            series: [76, 67, 61, 90],
+            chart: { height: 320, type: 'radialBar', fontFamily: fontFamily },
+            plotOptions: {
+                radialBar: {
+                    offsetY: 0,
+                    startAngle: 0,
+                    endAngle: 270,
+                    hollow: { margin: 5, size: '30%', background: 'transparent', image: undefined },
+                    dataLabels: { name: { show: false }, value: { show: false } }
+                }
+            },
+            colors: ['#3b82f6', '#8b5cf6', '#ec4899', '#10b981'],
+            labels: ['New', 'Contacted', 'Negotiation', 'Closed'],
+            legend: { show: true, floating: true, fontSize: '12px', position: 'left', offsetX: -20, offsetY: 10, labels: { useSeriesColors: true }, markers: { size: 0 }, itemMargin: { vertical: 3 } },
+            responsive: [{ breakpoint: 480, options: { legend: { show: false } } }]
+        };
+        new ApexCharts(document.querySelector("#chartRadial"), optionsRadial).render();
+
+        // 4. Agent Performance Radar
+        var optionsRadar = {
+            series: [{ name: 'Agent A', data: [80, 50, 30, 40, 100, 20] }, { name: 'Agent B', data: [20, 30, 40, 80, 20, 80] }],
+            chart: { height: 300, type: 'radar', toolbar: { show: false }, fontFamily: fontFamily },
+            labels: ['Speed', 'Closing', 'Negotiation', 'Prospecting', 'Satisfaction', 'Volume'],
+            stroke: { width: 2 },
+            fill: { opacity: 0.1 },
+            markers: { size: 4 },
+            colors: ['#3b82f6', '#ec4899'],
+            yaxis: { show: false },
+            legend: { position: 'bottom' }
+        };
+        new ApexCharts(document.querySelector("#chartRadar"), optionsRadar).render();
+
+        // 5. Lead Source Donut
+        var optionsDonut = {
+            series: [44, 55, 41, 17, 15],
+            chart: { type: 'donut', height: 300, fontFamily: fontFamily },
+            labels: ['Website', 'Referral', 'Social Media', 'Walk-in', 'Partners'],
+            colors: ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'],
+            plotOptions: { pie: { donut: { size: '65%', labels: { show: true, name: { show: true }, value: { show: true }, total: { show: true, showAlways: true, label: 'Total', fontSize: '18px', color: '#111827' } } } } },
+            dataLabels: { enabled: false },
+            legend: { position: 'bottom' },
+            stroke: { show: false }
+        };
+        new ApexCharts(document.querySelector("#chartDonut"), optionsDonut).render();
+
+        // 6. Activity Heatmap
+        function generateData(count, yrange) {
+            var i = 0;
+            var series = [];
+            while (i < count) {
+                var x = (i + 1).toString() + "w";
+                var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+                series.push({ x: x, y: y });
+                i++;
+            }
+            return series;
+        }
+        var optionsHeatmap = {
+            series: [
+                { name: 'Mon', data: generateData(12, { min: 0, max: 90 }) },
+                { name: 'Tue', data: generateData(12, { min: 0, max: 90 }) },
+                { name: 'Wed', data: generateData(12, { min: 0, max: 90 }) },
+                { name: 'Thu', data: generateData(12, { min: 0, max: 90 }) },
+                { name: 'Fri', data: generateData(12, { min: 0, max: 90 }) }
+            ],
+            chart: { height: 300, type: 'heatmap', toolbar: { show: false }, fontFamily: fontFamily },
+            dataLabels: { enabled: false },
+            colors: ["#3b82f6"],
+            grid: { show: false, padding: { top: 0, right: 0, bottom: 0, left: 0 } },
+            xaxis: { labels: { show: false }, axisBorder: { show: false }, axisTicks: { show: false } },
+            plotOptions: { heatmap: { radius: 8, enableShades: true, shadeIntensity: 0.5, colorScale: { ranges: [{ from: 0, to: 30, color: '#f3f4f6' }, { from: 31, to: 60, color: '#93c5fd' }, { from: 61, to: 100, color: '#3b82f6' }] } } }
+        };
+        new ApexCharts(document.querySelector("#chartHeatmap"), optionsHeatmap).render();
+
+    </script>
 </body>
 </html>
