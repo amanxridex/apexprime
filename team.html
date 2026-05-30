@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex CRM - Team Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .role-section {
+            margin-bottom: 40px;
+        }
+        .role-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--surface-border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .role-badge {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-director { background: rgba(124, 58, 237, 0.1); color: #7c3aed; }
+        .badge-subadmin { background: rgba(37, 99, 235, 0.1); color: #2563eb; }
+        .badge-tl { background: rgba(245, 158, 11, 0.1); color: #d97706; }
+        .badge-employee { background: rgba(16, 185, 129, 0.1); color: #059669; }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .team-card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--surface-border);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        
+        .team-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--surface-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .team-info h4 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        .team-info p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .team-actions {
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#8b5cf6" />
+                    </linearGradient>
+                </defs>
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Apex CRM
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="leads.html">Leads & Prospects</a></li>
+            <li><a href="properties.html">Properties</a></li>
+            <li><a href="clients.html">Clients</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
+            <li><a href="team.html" class="active">Team</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header>
+            <div>
+                <h1 style="font-size: 24px; font-weight: 600;">Organization Hierarchy</h1>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">Manage access control, roles, and teams across the enterprise.</p>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search employees or roles...">
+            </div>
+
+            <div class="user-profile">
+                <button class="btn btn-primary" style="margin-right: 16px;">+ Add Member</button>
+                <div class="avatar">AR</div>
+            </div>
+        </header>
+
+        <div class="panel glass">
+            <!-- Director Level -->
+            <div class="role-section">
+                <h3 class="role-title">Board & Executives <span class="role-badge badge-director">Director</span></h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #a78bfa, #7c3aed); color: white;">AK</div>
+                        <div class="team-info">
+                            <h4>Amit Kumar</h4>
+                            <p>Managing Director</p>
+                        </div>
+                        <div class="team-actions">
+                            <button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sub Admin Level -->
+            <div class="role-section">
+                <h3 class="role-title">Operations & Management <span class="role-badge badge-subadmin">Sub Admin</span></h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #60a5fa, #2563eb); color: white;">SM</div>
+                        <div class="team-info">
+                            <h4>Suresh Menon</h4>
+                            <p>VP of Sales</p>
+                        </div>
+                        <div class="team-actions">
+                            <button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Edit</button>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #60a5fa, #2563eb); color: white;">NJ</div>
+                        <div class="team-info">
+                            <h4>Neha Joshi</h4>
+                            <p>Head of Marketing</p>
+                        </div>
+                        <div class="team-actions">
+                            <button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Leader Level -->
+            <div class="role-section">
+                <h3 class="role-title">Regional Leaders <span class="role-badge badge-tl">Team Leader</span></h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #fcd34d, #d97706); color: white;">RS</div>
+                        <div class="team-info">
+                            <h4>Ravi Sharma</h4>
+                            <p>Lead - Western Region</p>
+                        </div>
+                        <div class="team-actions">
+                            <button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Edit</button>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #fcd34d, #d97706); color: white;">PK</div>
+                        <div class="team-info">
+                            <h4>Priya Kapoor</h4>
+                            <p>Lead - Northern Region</p>
+                        </div>
+                        <div class="team-actions">
+                            <button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employee Level -->
+            <div class="role-section">
+                <h3 class="role-title">Sales Representatives <span class="role-badge badge-employee">Employee</span></h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #34d399, #059669); color: white;">VD</div>
+                        <div class="team-info">
+                            <h4>Vikram Desai</h4>
+                            <p>Senior Agent</p>
+                        </div>
+                        <div class="team-actions">
+                            <button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Edit</button>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #34d399, #059669); color: white;">AJ</div>
+                        <div class="team-info">
+                            <h4>Anjali Jain</h4>
+                            <p>Sales Executive</p>
+                        </div>
+                        <div class="team-actions">
+                            <button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Edit</button>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #34d399, #059669); color: white;">MG</div>
+                        <div class="team-info">
+                            <h4>Manish Gupta</h4>
+                            <p>Property Consultant</p>
+                        </div>
+                        <div class="team-actions">
+                            <button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Edit</button>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #34d399, #059669); color: white;">SP</div>
+                        <div class="team-info">
+                            <h4>Sonia Patel</h4>
+                            <p>Junior Agent</p>
+                        </div>
+                        <div class="team-actions">
+                            <button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
