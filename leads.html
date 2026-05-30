@@ -127,7 +127,35 @@
                     <div style="margin-top: 8px; font-size: 12px; color: var(--success);">Closed for 1.5Cr</div>
                 </div>
             </div>
+            </div>
         </div>
     </main>
+
+    <script>
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            const name = prompt("Enter the new lead's name:");
+            if (!name) return;
+            
+            const details = prompt("Enter lead details or requirements:");
+            
+            const newCard = document.createElement('div');
+            newCard.className = 'kanban-card glass';
+            newCard.innerHTML = `
+                <h4>${name}</h4>
+                <p>${details || 'No details provided.'}</p>
+                <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Added just now</div>
+            `;
+            
+            // Add the new card to the first kanban column ("New Leads")
+            const newLeadsColumn = document.querySelector('.kanban-column');
+            newLeadsColumn.appendChild(newCard);
+
+            // Update the count badge
+            const countBadge = newLeadsColumn.querySelector('.kanban-header span:last-child');
+            if (countBadge) {
+                countBadge.textContent = parseInt(countBadge.textContent) + 1;
+            }
+        });
+    </script>
 </body>
 </html>
