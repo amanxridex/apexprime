@@ -138,10 +138,24 @@
                 <button class="close-btn" id="closeModalBtn">&times;</button>
             </div>
             <div class="form-group">
-                <label for="leadName">Lead Name</label>
+                <label for="leadName">Lead Name <span style="color: var(--danger);">*</span></label>
                 <input type="text" id="leadName" placeholder="e.g. Rohan Sharma" required>
             </div>
             <div class="form-group">
+                <label for="leadPhone">Phone Number <span style="color: var(--danger);">*</span></label>
+                <input type="tel" id="leadPhone" placeholder="e.g. +91 98765 43210" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="leadEmail">Email Address</label>
+                    <input type="email" id="leadEmail" placeholder="e.g. rohan@example.com">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="leadCity">City</label>
+                    <input type="text" id="leadCity" placeholder="e.g. Mumbai">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
                 <label for="leadDetails">Requirements & Details</label>
                 <textarea id="leadDetails" rows="3" placeholder="e.g. Looking for a 3BHK in Andheri West..."></textarea>
             </div>
@@ -159,6 +173,9 @@
         const cancelBtn = document.getElementById('cancelModalBtn');
         const saveBtn = document.getElementById('saveLeadBtn');
         const nameInput = document.getElementById('leadName');
+        const phoneInput = document.getElementById('leadPhone');
+        const emailInput = document.getElementById('leadEmail');
+        const cityInput = document.getElementById('leadCity');
         const detailsInput = document.getElementById('leadDetails');
 
         function openModal() {
@@ -169,6 +186,9 @@
         function closeModal() {
             modal.classList.remove('active');
             nameInput.value = '';
+            phoneInput.value = '';
+            emailInput.value = '';
+            cityInput.value = '';
             detailsInput.value = '';
         }
 
@@ -182,6 +202,9 @@
 
         saveBtn.addEventListener('click', function() {
             const name = nameInput.value.trim();
+            const phone = phoneInput.value.trim();
+            const email = emailInput.value.trim();
+            const city = cityInput.value.trim();
             const details = detailsInput.value.trim();
             
             if (!name) {
@@ -189,12 +212,24 @@
                 nameInput.focus();
                 return;
             }
+            if (!phone) {
+                alert('Please enter a phone number');
+                phoneInput.focus();
+                return;
+            }
+
+            let extraInfo = [];
+            if (city) extraInfo.push(city);
+            if (phone) extraInfo.push(phone);
+            if (email) extraInfo.push(email);
+            let extraStr = extraInfo.join(' • ');
             
             const newCard = document.createElement('div');
             newCard.className = 'kanban-card glass';
             newCard.innerHTML = `
                 <h4>${name}</h4>
                 <p>${details || 'No details provided.'}</p>
+                ${extraStr ? `<div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary); font-weight: 500; overflow-wrap: break-word;">${extraStr}</div>` : ''}
                 <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Added just now</div>
             `;
             
