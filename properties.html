@@ -63,14 +63,14 @@
             </div>
 
             <div class="user-profile">
-                <button class="btn btn-primary" style="margin-right: 16px;">+ Add Property</button>
+                <button class="btn btn-primary" style="margin-right: 16px;" onclick="openPropertyModal()">+ Add Property</button>
                 <div class="avatar">AR</div>
             </div>
         </header>
 
         <div class="property-grid">
             <div class="property-card glass">
-                <div class="property-image" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6);">
+                <div class="property-image" style="background: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=400&q=80') center/cover;">
                     <div class="property-price">₹1.2 Cr</div>
                 </div>
                 <div class="property-details">
@@ -87,7 +87,7 @@
             </div>
 
             <div class="property-card glass">
-                <div class="property-image" style="background: linear-gradient(135deg, #064e3b, #10b981);">
+                <div class="property-image" style="background: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=80') center/cover;">
                     <div class="property-price">₹85 L</div>
                 </div>
                 <div class="property-details">
@@ -104,7 +104,7 @@
             </div>
 
             <div class="property-card glass">
-                <div class="property-image" style="background: linear-gradient(135deg, #4c1d95, #8b5cf6);">
+                <div class="property-image" style="background: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=400&q=80') center/cover;">
                     <div class="property-price">₹2.1 Cr</div>
                 </div>
                 <div class="property-details">
@@ -121,7 +121,7 @@
             </div>
 
             <div class="property-card glass">
-                <div class="property-image" style="background: linear-gradient(135deg, #7f1d1d, #ef4444);">
+                <div class="property-image" style="background: url('https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=400&q=80') center/cover;">
                     <div class="property-price">₹1.5 Cr</div>
                 </div>
                 <div class="property-details">
@@ -138,7 +138,7 @@
             </div>
             
             <div class="property-card glass">
-                <div class="property-image" style="background: linear-gradient(135deg, #78350f, #f59e0b);">
+                <div class="property-image" style="background: url('https://images.unsplash.com/photo-1502672260266-1c1c2c49b43c?auto=format&fit=crop&w=400&q=80') center/cover;">
                     <div class="property-price">₹45 L</div>
                 </div>
                 <div class="property-details">
@@ -155,5 +155,65 @@
             </div>
         </div>
     </main>
+
+    <!-- Add Property Modal -->
+    <div class="modal-overlay" id="propertyModal">
+        <div class="modal-content glass">
+            <div class="modal-header">
+                <h3>Add New Property</h3>
+                <button onclick="closePropertyModal()" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Property Name</label>
+                <input type="text" class="form-input" placeholder="e.g. Sunset Villas #42">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-input" placeholder="e.g. Andheri West, Mumbai">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Price</label>
+                <input type="text" class="form-input" placeholder="e.g. ₹1.2 Cr">
+            </div>
+            <div class="form-group" style="display: flex; gap: 16px;">
+                <div style="flex: 1;">
+                    <label class="form-label">BHK</label>
+                    <input type="text" class="form-input" placeholder="e.g. 3 BHK">
+                </div>
+                <div style="flex: 1;">
+                    <label class="form-label">Area (sqft)</label>
+                    <input type="text" class="form-input" placeholder="e.g. 1200">
+                </div>
+            </div>
+            <div style="display: flex; gap: 16px; margin-top: 24px;">
+                <button class="btn" style="flex: 1; background: rgba(255,255,255,0.1);" onclick="closePropertyModal()">Cancel</button>
+                <button class="btn btn-primary" style="flex: 1;" id="addPropertyBtn" onclick="submitProperty()">Save Property</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openPropertyModal() {
+            document.getElementById('propertyModal').style.display = 'flex';
+        }
+
+        function closePropertyModal() {
+            document.getElementById('propertyModal').style.display = 'none';
+            // Reset fields
+            document.querySelectorAll('#propertyModal input').forEach(input => input.value = '');
+            document.getElementById('addPropertyBtn').innerText = 'Save Property';
+        }
+
+        function submitProperty() {
+            const btn = document.getElementById('addPropertyBtn');
+            btn.innerText = 'Saving...';
+            setTimeout(() => {
+                closePropertyModal();
+                // We're just simulating saving for now
+            }, 800);
+        }
+    </script>
 </body>
 </html>
