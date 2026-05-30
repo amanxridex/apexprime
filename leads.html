@@ -173,6 +173,31 @@
         </div>
     </div>
 
+    <!-- Update Status Modal -->
+    <div class="modal-overlay" id="statusModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Update Lead Status</h3>
+                <button class="close-btn" id="closeStatusModalBtn">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="leadStatusSelect">Status</label>
+                <select id="leadStatusSelect" style="width: 100%; padding: 12px; border: 1px solid var(--surface-border); border-radius: 8px; background: rgba(255,255,255,0.5); margin-top: 8px; font-family: inherit; font-size: 14px;">
+                    <option value="New Lead">New Lead</option>
+                    <option value="Follow Up">Follow Up</option>
+                    <option value="Contacted">Contacted</option>
+                    <option value="Customer Denied">Customer Denied</option>
+                    <option value="Negotiations">Negotiations</option>
+                    <option value="Closed">Closed</option>
+                </select>
+            </div>
+            <div class="modal-footer" style="margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px;">
+                <button class="btn btn-secondary" id="cancelStatusModalBtn">Cancel</button>
+                <button class="btn btn-primary bg-highlight" id="saveStatusBtn" style="color: #064e3b; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);">Update Status</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const modal = document.getElementById('newLeadModal');
         const openBtn = document.querySelector('.btn-primary');
@@ -245,6 +270,73 @@
             tbody.insertBefore(newRow, tbody.firstChild);
 
             closeModal();
+        });
+
+        // --- Update Status Modal Logic ---
+        const statusModal = document.getElementById('statusModal');
+        const closeStatusBtn = document.getElementById('closeStatusModalBtn');
+        const cancelStatusBtn = document.getElementById('cancelStatusModalBtn');
+        const saveStatusBtn = document.getElementById('saveStatusBtn');
+        const statusSelect = document.getElementById('leadStatusSelect');
+        let currentStatusBadge = null;
+
+        function closeStatusModal() {
+            statusModal.classList.remove('active');
+            currentStatusBadge = null;
+        }
+
+        closeStatusBtn.addEventListener('click', closeStatusModal);
+        cancelStatusBtn.addEventListener('click', closeStatusModal);
+        statusModal.addEventListener('click', (e) => {
+            if (e.target === statusModal) closeStatusModal();
+        });
+
+        document.getElementById('leadsTableBody').addEventListener('click', function(e) {
+            const badge = e.target.closest('.status-badge');
+            if (badge) {
+                currentStatusBadge = badge;
+                const currentText = badge.textContent.trim();
+                
+                // Find matching option
+                for (let i = 0; i < statusSelect.options.length; i++) {
+                    if (statusSelect.options[i].value === currentText) {
+                        statusSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+                statusModal.classList.add('active');
+            }
+        });
+
+        saveStatusBtn.addEventListener('click', function() {
+            if (currentStatusBadge) {
+                const newStatus = statusSelect.value;
+                currentStatusBadge.textContent = newStatus;
+                
+                // reset styling
+                currentStatusBadge.className = 'status-badge';
+                currentStatusBadge.style = '';
+
+                // apply new styling
+                if (newStatus === 'New Lead') {
+                    currentStatusBadge.style.background = 'rgba(59,130,246,0.1)';
+                    currentStatusBadge.style.color = '#3b82f6';
+                    currentStatusBadge.style.border = '1px solid rgba(59,130,246,0.2)';
+                } else if (newStatus === 'Contacted' || newStatus === 'Follow Up') {
+                    currentStatusBadge.classList.add('status-pending');
+                } else if (newStatus === 'Negotiations') {
+                    currentStatusBadge.style.background = 'rgba(139,92,246,0.1)';
+                    currentStatusBadge.style.color = '#8b5cf6';
+                    currentStatusBadge.style.border = '1px solid rgba(139,92,246,0.2)';
+                } else if (newStatus === 'Closed') {
+                    currentStatusBadge.classList.add('status-active');
+                } else if (newStatus === 'Customer Denied') {
+                    currentStatusBadge.style.background = 'rgba(239,68,68,0.1)';
+                    currentStatusBadge.style.color = '#ef4444';
+                    currentStatusBadge.style.border = '1px solid rgba(239,68,68,0.2)';
+                }
+            }
+            closeStatusModal();
         });
     </script>
 </body>
