@@ -38,6 +38,11 @@
             transition: height 1s ease;
         }
     </style>
+    <script>
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+    </script>
 </head>
 <body>
     <div class="animated-bg"></div>
