@@ -3,12 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex CRM - Settings</title>
+    <title>Apex CRM - God Mode Settings</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Settings Specific Layout */
+        .settings-container {
+            display: flex;
+            gap: 32px;
+            align-items: flex-start;
+        }
+
+        .settings-nav {
+            flex: 0 0 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .settings-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .settings-nav-btn:hover {
+            background: rgba(0,0,0,0.02);
+            color: var(--text-primary);
+        }
+
+        .settings-nav-btn.active {
+            background: var(--surface-glass);
+            border: 1px solid var(--surface-border);
+            color: var(--text-primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            font-weight: 600;
+        }
+        .settings-nav-btn.active svg { color: #3b82f6; }
+
+        .settings-content-area {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .settings-tab {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Beautiful Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd5e1; transition: .3s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        input:checked + .slider { background: linear-gradient(135deg, #3b82f6, #8b5cf6); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .data-table th {
+            padding: 16px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--surface-border);
+        }
+        .data-table td {
+            padding: 16px;
+            color: var(--text-primary);
+            font-size: 14px;
+            border-bottom: 1px solid var(--surface-border);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tr:hover td { background: rgba(0,0,0,0.01); }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-success { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+        .badge-warning { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+        .badge-danger { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+        .badge-info { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+
+        .integration-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px;
+            background: #fff;
+            border: 1px solid var(--surface-border);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+        .integration-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        .icon-box {
+            width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+        }
+    </style>
     <script>
+        // God Mode Check - Only Directors allowed
         if (!localStorage.getItem('isLoggedIn')) {
             window.location.href = 'login.html';
+        } else {
+            const role = localStorage.getItem('userRole');
+            if (role !== 'Director') {
+                alert("ACCESS DENIED: Only Directors have clearance to view God Level Settings.");
+                window.location.href = 'index.html';
+            }
         }
     </script>
 </head>
@@ -31,7 +173,7 @@
             Apex CRM
         </div>
 
-                <ul class="nav-links">
+        <ul class="nav-links">
             <li><a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg> Dashboard</a></li>
             <li><a href="leads.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Leads & Prospects</a></li>
             <li><a href="properties.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Properties</a></li>
@@ -47,101 +189,336 @@
                 Logout
             </a>
         </div>
-
     </aside>
 
     <!-- Main Content -->
     <main class="main-content">
         <header>
             <div>
-                <h1 style="font-size: 24px; font-weight: 600;">Account Settings</h1>
-                <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">Update your profile details and preferences.</p>
+                <h1 style="font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Director Settings</h1>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">System-wide configuration, access control, and master logs.</p>
             </div>
             
             <div class="user-profile">
-                <div class="avatar">AR</div>
+                <div class="badge badge-danger" style="margin-right: 16px; border: 1px solid rgba(239,68,68,0.3);">GOD MODE</div>
+                <div class="avatar" style="background: linear-gradient(135deg, #ef4444, #b91c1c);">DR</div>
             </div>
         </header>
 
-        <div class="content-grid" style="grid-template-columns: 1fr 1fr;">
-            <!-- Profile Info -->
-            <div class="panel glass">
-                <div class="panel-header">
-                    <h3 class="panel-title">Personal Information</h3>
-                </div>
-                
-                <form>
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" value="Admin User" placeholder="Enter your name">
-                    </div>
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" value="admin@apexcrm.com" placeholder="Enter your email">
-                    </div>
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="tel" value="+91 9876543210" placeholder="Enter phone number">
-                    </div>
-                    <div class="form-group">
-                        <label>Role</label>
-                        <select>
-                            <option>Super Admin</option>
-                            <option>Sales Agent</option>
-                            <option>Manager</option>
-                        </select>
-                    </div>
-                    
-                    <button type="button" class="btn btn-primary" style="margin-top: 12px;">Save Changes</button>
-                </form>
-            </div>
+        <div class="settings-container">
+            
+            <!-- Settings Navigation -->
+            <nav class="settings-nav">
+                <button class="settings-nav-btn active" onclick="switchSettingsTab('general')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    General
+                </button>
+                <button class="settings-nav-btn" onclick="switchSettingsTab('team')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Team Management
+                </button>
+                <button class="settings-nav-btn" onclick="switchSettingsTab('security')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Security & Access
+                </button>
+                <button class="settings-nav-btn" onclick="switchSettingsTab('integrations')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                    Integrations & APIs
+                </button>
+                <button class="settings-nav-btn" onclick="switchSettingsTab('audit')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    Audit Logs
+                </button>
+            </nav>
 
-            <!-- System Preferences -->
-            <div class="panel glass">
-                <div class="panel-header">
-                    <h3 class="panel-title">Preferences</h3>
-                </div>
+            <!-- Content Area -->
+            <div class="settings-content-area">
                 
-                <form>
-                    <div class="form-group">
-                        <label>Theme</label>
-                        <select>
-                            <option>Dark Mode (Default)</option>
-                            <option>Light Mode</option>
-                            <option>System Default</option>
-                        </select>
+                <!-- Tab 1: General -->
+                <div id="tab-general" class="settings-tab panel glass" style="display: block;">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Global Organization Details</h3>
                     </div>
-                    <div class="form-group">
-                        <label>Currency</label>
-                        <select>
-                            <option>INR (₹)</option>
-                            <option>USD ($)</option>
-                            <option>EUR (€)</option>
-                        </select>
+                    <div style="padding: 24px;">
+                        <form>
+                            <div style="display: flex; gap: 24px; margin-bottom: 24px;">
+                                <div class="form-group" style="flex: 1;">
+                                    <label class="form-label">Organization Name</label>
+                                    <input type="text" class="form-input" value="Apex Real Estate Pvt Ltd">
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label class="form-label">Primary Support Email</label>
+                                    <input type="email" class="form-input" value="support@apexcrm.com">
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 24px; margin-bottom: 32px;">
+                                <div class="form-group" style="flex: 1;">
+                                    <label class="form-label">Default Currency</label>
+                                    <select class="form-input">
+                                        <option>INR (₹)</option>
+                                        <option>USD ($)</option>
+                                        <option>EUR (€)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label class="form-label">Timezone</label>
+                                    <select class="form-input">
+                                        <option>Asia/Kolkata (IST)</option>
+                                        <option>America/New_York (EST)</option>
+                                        <option>Europe/London (GMT)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <h4 style="margin-bottom: 16px; font-weight: 600;">Branding & Appearance</h4>
+                            <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 32px; padding: 24px; border: 1px dashed var(--surface-border); border-radius: 12px;">
+                                <div style="width: 80px; height: 80px; border-radius: 12px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 24px;">AR</div>
+                                <div>
+                                    <h5 style="margin-bottom: 8px;">Organization Logo</h5>
+                                    <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 12px;">Used across client portals and PDF exports. Recommended size 512x512px.</p>
+                                    <button type="button" class="btn" style="background: white;">Upload New Image</button>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-primary">Save Global Configurations</button>
+                        </form>
                     </div>
+                </div>
+
+                <!-- Tab 2: Team Management -->
+                <div id="tab-team" class="settings-tab panel glass">
+                    <div class="panel-header" style="display: flex; justify-content: space-between;">
+                        <h3 class="panel-title">Master Roster</h3>
+                        <button class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;">+ Invite User</button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Last Login</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="font-weight: 600;">Jaadugar</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">director@apexcrm.com</div>
+                                </td>
+                                <td><span class="badge badge-info">Director</span></td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>Just now</td>
+                                <td><button class="btn" style="padding: 4px 12px; font-size: 12px; background: transparent; border-color: var(--surface-border);">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="font-weight: 600;">Aman Singh</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">aman@apexcrm.com</div>
+                                </td>
+                                <td><span class="badge badge-warning">Subadmin</span></td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>2 hours ago</td>
+                                <td><button class="btn" style="padding: 4px 12px; font-size: 12px; background: transparent; border-color: var(--surface-border);">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="font-weight: 600;">Ravi Kumar</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">ravi@apexcrm.com</div>
+                                </td>
+                                <td><span class="badge" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">Team Leader</span></td>
+                                <td><span class="badge badge-success">Active</span></td>
+                                <td>1 day ago</td>
+                                <td><button class="btn" style="padding: 4px 12px; font-size: 12px; background: transparent; border-color: var(--surface-border);">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="font-weight: 600;">Neha Sharma</div>
+                                    <div style="font-size: 13px; color: var(--text-secondary);">neha@apexcrm.com</div>
+                                </td>
+                                <td><span class="badge" style="background: rgba(107, 114, 128, 0.1); color: #6b7280;">Employee</span></td>
+                                <td><span class="badge badge-danger">Banned</span></td>
+                                <td>14 days ago</td>
+                                <td><button class="btn" style="padding: 4px 12px; font-size: 12px; background: transparent; border-color: var(--surface-border);">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Tab 3: Security & Access -->
+                <div id="tab-security" class="settings-tab panel glass">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Security Policies</h3>
+                    </div>
+                    <div style="padding: 24px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--surface-border);">
+                            <div>
+                                <h4 style="font-size: 16px; margin-bottom: 4px;">Require Two-Factor Authentication (2FA)</h4>
+                                <p style="color: var(--text-secondary); font-size: 14px;">Force all employees to configure OTP apps (Google Authenticator) upon next login.</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--surface-border);">
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 16px; margin-bottom: 4px;">IP Whitelisting (Office Networks Only)</h4>
+                                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Restrict access to the CRM strictly to the IP addresses listed below.</p>
+                                <input type="text" class="form-input" placeholder="e.g. 192.168.1.1, 10.0.0.1" style="width: 80%;">
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #ef4444;">Active Sessions</h4>
+                        <table class="data-table" style="margin-bottom: 0;">
+                            <thead>
+                                <tr>
+                                    <th>Device</th>
+                                    <th>Location / IP</th>
+                                    <th>Last Active</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><div style="font-weight: 500;">Mac OS X • Chrome</div></td>
+                                    <td>Mumbai, India (103.24.55.12)</td>
+                                    <td><span style="color: #10b981; font-weight: 500;">Current Session</span></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><div style="font-weight: 500;">Windows 11 • Edge</div></td>
+                                    <td>Pune, India (14.12.89.2)</td>
+                                    <td>2 hours ago</td>
+                                    <td><button style="color: #ef4444; border: 1px solid rgba(239,68,68,0.2); background: rgba(239,68,68,0.05); padding: 6px 12px; border-radius: 6px; cursor: pointer;">Revoke</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Integrations -->
+                <div id="tab-integrations" class="settings-tab">
+                    <h3 style="font-size: 20px; font-weight: 600; margin-bottom: 24px;">Connected Services</h3>
                     
-                    <div style="margin-top: 32px;">
-                        <h4 style="margin-bottom: 12px; font-weight: 500;">Notifications</h4>
-                        
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--surface-border);">
-                            <div>
-                                <div style="font-weight: 500;">Email Alerts</div>
-                                <div style="font-size: 13px; color: var(--text-secondary);">Receive daily summary emails.</div>
+                    <div class="integration-card">
+                        <div style="display: flex; gap: 16px; align-items: center;">
+                            <div class="icon-box" style="background: rgba(37, 211, 102, 0.1); color: #25D366;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                             </div>
-                            <input type="checkbox" checked style="width: 20px; height: 20px; accent-color: var(--accent-gradient);">
-                        </div>
-                        
-                        <div style="display: flex; justify-content: space-between;">
                             <div>
-                                <div style="font-weight: 500;">New Lead SMS</div>
-                                <div style="font-size: 13px; color: var(--text-secondary);">Get an SMS for every new lead.</div>
+                                <h4 style="font-size: 16px; margin: 0 0 4px 0;">WhatsApp Business API</h4>
+                                <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">Automate follow-ups and send broadcast messages to leads.</p>
                             </div>
-                            <input type="checkbox" style="width: 20px; height: 20px; accent-color: var(--accent-gradient);">
                         </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
                     </div>
-                </form>
+
+                    <div class="integration-card">
+                        <div style="display: flex; gap: 16px; align-items: center;">
+                            <div class="icon-box" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 16px; margin: 0 0 4px 0;">Stripe Payments</h4>
+                                <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">Process booking amounts and handle invoicing.</p>
+                            </div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="integration-card">
+                        <div style="display: flex; gap: 16px; align-items: center;">
+                            <div class="icon-box" style="background: rgba(255, 153, 0, 0.1); color: #ff9900;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 16px; margin: 0 0 4px 0;">AWS S3 Storage</h4>
+                                <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">Host property images and PDFs in secure cloud buckets.</p>
+                            </div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tab 5: Audit Logs -->
+                <div id="tab-audit" class="settings-tab panel glass">
+                    <div class="panel-header" style="display: flex; justify-content: space-between;">
+                        <h3 class="panel-title">System Audit Trail</h3>
+                        <div style="font-size: 12px; color: var(--text-secondary);">Last 30 Days</div>
+                    </div>
+                    <table class="data-table" style="font-family: monospace; font-size: 13px;">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>User</th>
+                                <th>Event / Action</th>
+                                <th>IP Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color: var(--text-secondary);">2026-05-30 14:12:05</td>
+                                <td><span class="badge badge-info" style="font-family: 'Outfit';">Jaadugar</span></td>
+                                <td>UPDATED System.Settings.2FA</td>
+                                <td>103.24.55.12</td>
+                            </tr>
+                            <tr>
+                                <td style="color: var(--text-secondary);">2026-05-30 13:45:22</td>
+                                <td><span class="badge badge-warning" style="font-family: 'Outfit';">Aman Singh</span></td>
+                                <td>EXPORTED Leads_List_Mumbai.csv</td>
+                                <td>14.12.89.2</td>
+                            </tr>
+                            <tr>
+                                <td style="color: var(--text-secondary);">2026-05-29 18:22:11</td>
+                                <td><span class="badge badge-info" style="font-family: 'Outfit';">Jaadugar</span></td>
+                                <td style="color: #ef4444; font-weight: 600;">DELETED Property.Oasis_Heights</td>
+                                <td>103.24.55.12</td>
+                            </tr>
+                            <tr>
+                                <td style="color: var(--text-secondary);">2026-05-29 11:05:44</td>
+                                <td><span class="badge" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6; font-family: 'Outfit';">Ravi Kumar</span></td>
+                                <td>CREATED Client.Ramesh_Gupta</td>
+                                <td>112.45.11.9</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     </main>
+
+    <script>
+        function switchSettingsTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.settings-tab').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            // Remove active class from buttons
+            document.querySelectorAll('.settings-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById('tab-' + tabId).style.display = 'block';
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
 </html>
