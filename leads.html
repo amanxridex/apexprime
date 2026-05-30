@@ -55,16 +55,18 @@
             </div>
         </header>
 
-        <div class="panel glass" style="padding: 0; overflow: hidden;">
-            <table class="data-table" id="leadsTable" style="margin: 0; width: 100%;">
+        <div class="panel glass" style="padding: 0; overflow-x: auto; overflow-y: hidden;">
+            <table class="data-table" id="leadsTable" style="margin: 0; width: 100%; min-width: 1200px;">
                 <thead style="background: rgba(0,0,0,0.02);">
                     <tr>
-                        <th style="padding: 16px 24px;">Name</th>
-                        <th style="padding: 16px 24px;">Mobile Number</th>
-                        <th style="padding: 16px 24px;">Email Address</th>
-                        <th style="padding: 16px 24px;">Requirements</th>
-                        <th style="padding: 16px 24px;">Status</th>
-                        <th style="padding: 16px 24px;">Added</th>
+                        <th style="padding: 16px 24px; white-space: nowrap;">Name</th>
+                        <th style="padding: 16px 24px; white-space: nowrap;">Mobile Number</th>
+                        <th style="padding: 16px 24px; white-space: nowrap;">Email Address</th>
+                        <th style="padding: 16px 24px; min-width: 200px;">Requirements</th>
+                        <th style="padding: 16px 24px; white-space: nowrap;">Assigned To</th>
+                        <th style="padding: 16px 24px; white-space: nowrap;">Status</th>
+                        <th style="padding: 16px 24px; white-space: nowrap;">Follow Up Time</th>
+                        <th style="padding: 16px 24px; white-space: nowrap;">Date & Time</th>
                     </tr>
                 </thead>
                 <tbody id="leadsTableBody">
@@ -73,64 +75,80 @@
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">+91 9876543210</td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">vikram@example.com</td>
                         <td style="padding: 16px 24px;">Looking for a 3BHK in Andheri West. Budget ~2.5Cr.</td>
+                        <td style="padding: 16px 24px; color: var(--text-primary); font-size: 13px;">Aman</td>
                         <td style="padding: 16px 24px;"><span class="status-badge" style="background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid rgba(59,130,246,0.2);">New Lead</span></td>
-                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">2h ago</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">30 May 2026, 16:00</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">30 May 2026, 11:30</td>
                     </tr>
                     <tr>
                         <td style="padding: 16px 24px;"><strong>Meera Reddy</strong></td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">+91 8765432109</td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">meera.r@email.com</td>
                         <td style="padding: 16px 24px;">Interested in commercial space.</td>
+                        <td style="padding: 16px 24px; color: var(--text-primary); font-size: 13px;">Sneha</td>
                         <td style="padding: 16px 24px;"><span class="status-badge" style="background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid rgba(59,130,246,0.2);">New Lead</span></td>
-                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">5h ago</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">31 May 2026, 10:00</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">30 May 2026, 09:15</td>
                     </tr>
                     <tr>
                         <td style="padding: 16px 24px;"><strong>Anil Kapoor</strong></td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">+91 7654321098</td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">anil.k@mail.com</td>
                         <td style="padding: 16px 24px;">Wants to sell 2BHK flat.</td>
+                        <td style="padding: 16px 24px; color: var(--text-primary); font-size: 13px;">Rohan</td>
                         <td style="padding: 16px 24px;"><span class="status-badge" style="background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid rgba(59,130,246,0.2);">New Lead</span></td>
-                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">1d ago</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">-</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">29 May 2026, 14:20</td>
                     </tr>
                     <tr>
                         <td style="padding: 16px 24px;"><strong>Sneha Desai</strong></td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">+91 6543210987</td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">sneha.d@corp.in</td>
                         <td style="padding: 16px 24px;">Shared brochure for Lotus Heights. Call back tomorrow.</td>
+                        <td style="padding: 16px 24px; color: var(--text-primary); font-size: 13px;">Aman</td>
                         <td style="padding: 16px 24px;"><span class="status-badge status-pending">Contacted</span></td>
-                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">2d ago</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">01 Jun 2026, 10:00</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">28 May 2026, 11:00</td>
                     </tr>
                     <tr>
                         <td style="padding: 16px 24px;"><strong>Rajat Sharma</strong></td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">+91 9988776655</td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">rajat@gmail.com</td>
                         <td style="padding: 16px 24px;">Site visit scheduled for Skyline.</td>
+                        <td style="padding: 16px 24px; color: var(--text-primary); font-size: 13px;">Sneha</td>
                         <td style="padding: 16px 24px;"><span class="status-badge status-pending">Contacted</span></td>
-                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">3d ago</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">02 Jun 2026, 14:30</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">27 May 2026, 16:45</td>
                     </tr>
                     <tr>
                         <td style="padding: 16px 24px;"><strong>Priya Patel</strong></td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">+91 8877665544</td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">priya.patel@hotmail.com</td>
                         <td style="padding: 16px 24px;">Discussing price for Skyline Apartments. Offered 80L.</td>
+                        <td style="padding: 16px 24px; color: var(--text-primary); font-size: 13px;">Rohan</td>
                         <td style="padding: 16px 24px;"><span class="status-badge" style="background: rgba(139,92,246,0.1); color: #8b5cf6; border: 1px solid rgba(139,92,246,0.2);">Negotiation</span></td>
-                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">1w ago</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">30 May 2026, 17:00</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">23 May 2026, 09:30</td>
                     </tr>
                     <tr>
                         <td style="padding: 16px 24px;"><strong>Rahul Sharma</strong></td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">+91 7766554433</td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">rahul.sharma@yahoo.com</td>
                         <td style="padding: 16px 24px;">Sunset Villas #42</td>
+                        <td style="padding: 16px 24px; color: var(--text-primary); font-size: 13px;">Aman</td>
                         <td style="padding: 16px 24px;"><span class="status-badge status-active">Closed</span></td>
-                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">2w ago</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">-</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">16 May 2026, 12:15</td>
                     </tr>
                     <tr>
                         <td style="padding: 16px 24px;"><strong>Neha Gupta</strong></td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">+91 6655443322</td>
                         <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">neha.g@outlook.com</td>
                         <td style="padding: 16px 24px;">Palm Grove Estate</td>
+                        <td style="padding: 16px 24px; color: var(--text-primary); font-size: 13px;">Sneha</td>
                         <td style="padding: 16px 24px;"><span class="status-badge status-active">Closed</span></td>
-                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">1m ago</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">-</td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">30 Apr 2026, 15:00</td>
                     </tr>
                 </tbody>
             </table>
@@ -160,6 +178,21 @@
                 <div class="form-group" style="margin-bottom: 0;">
                     <label for="leadCity">City</label>
                     <input type="text" id="leadCity" placeholder="e.g. Mumbai">
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="leadAssignedTo">Assigned To</label>
+                    <select id="leadAssignedTo" style="width: 100%; padding: 12px; border: 1px solid var(--surface-border); border-radius: 8px; background: rgba(255,255,255,0.5); font-family: inherit; font-size: 14px;">
+                        <option value="Unassigned">Unassigned</option>
+                        <option value="Aman">Aman</option>
+                        <option value="Rohan">Rohan</option>
+                        <option value="Sneha">Sneha</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="leadFollowUp">Follow Up Time</label>
+                    <input type="datetime-local" id="leadFollowUp" style="width: 100%; padding: 12px; border: 1px solid var(--surface-border); border-radius: 8px; background: rgba(255,255,255,0.5); font-family: inherit; font-size: 14px;">
                 </div>
             </div>
             <div class="form-group" style="margin-top: 20px;">
@@ -209,6 +242,8 @@
         const emailInput = document.getElementById('leadEmail');
         const cityInput = document.getElementById('leadCity');
         const detailsInput = document.getElementById('leadDetails');
+        const assignedToInput = document.getElementById('leadAssignedTo');
+        const followUpInput = document.getElementById('leadFollowUp');
 
         function openModal() {
             modal.classList.add('active');
@@ -222,6 +257,8 @@
             emailInput.value = '';
             cityInput.value = '';
             detailsInput.value = '';
+            assignedToInput.value = 'Unassigned';
+            followUpInput.value = '';
         }
 
         openBtn.addEventListener('click', openModal);
@@ -238,6 +275,8 @@
             const email = emailInput.value.trim();
             const city = cityInput.value.trim();
             const details = detailsInput.value.trim();
+            const assignedTo = assignedToInput.value;
+            const followUpRaw = followUpInput.value;
             
             if (!name) {
                 alert('Please enter a lead name');
@@ -255,14 +294,27 @@
                 finalDetails = finalDetails ? `${finalDetails} (City: ${city})` : `City: ${city}`;
             }
 
+            // Formatting Date & Time
+            const now = new Date();
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const formattedNow = `${now.getDate().toString().padStart(2, '0')} ${months[now.getMonth()]} ${now.getFullYear()}, ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+            let formattedFollowUp = '-';
+            if (followUpRaw) {
+                const fDate = new Date(followUpRaw);
+                formattedFollowUp = `${fDate.getDate().toString().padStart(2, '0')} ${months[fDate.getMonth()]} ${fDate.getFullYear()}, ${fDate.getHours().toString().padStart(2, '0')}:${fDate.getMinutes().toString().padStart(2, '0')}`;
+            }
+
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
                 <td style="padding: 16px 24px;"><strong>${name}</strong></td>
                 <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">${phone}</td>
                 <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">${email || '-'}</td>
                 <td style="padding: 16px 24px;">${finalDetails || '-'}</td>
+                <td style="padding: 16px 24px; color: var(--text-primary); font-size: 13px;">${assignedTo}</td>
                 <td style="padding: 16px 24px;"><span class="status-badge" style="background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid rgba(59,130,246,0.2);">New Lead</span></td>
-                <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">Just now</td>
+                <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">${formattedFollowUp}</td>
+                <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">${formattedNow}</td>
             `;
             
             // Add the new row to the table
