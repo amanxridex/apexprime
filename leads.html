@@ -55,78 +55,76 @@
             </div>
         </header>
 
-        <div class="kanban-board">
-            <!-- New Leads -->
-            <div class="kanban-column">
-                <div class="kanban-header">
-                    <span>New Leads</span>
-                    <span style="background: rgba(59,130,246,0.2); padding: 2px 8px; border-radius: 12px; font-size: 12px; color: #60a5fa;">3</span>
-                </div>
-                <div class="kanban-card glass">
-                    <h4>Vikram Singh</h4>
-                    <p>Looking for a 3BHK in Andheri West. Budget ~2.5Cr.</p>
-                    <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Added 2h ago</div>
-                </div>
-                <div class="kanban-card glass">
-                    <h4>Meera Reddy</h4>
-                    <p>Interested in commercial space.</p>
-                    <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Added 5h ago</div>
-                </div>
-                <div class="kanban-card glass">
-                    <h4>Anil Kapoor</h4>
-                    <p>Wants to sell 2BHK flat.</p>
-                    <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Added 1d ago</div>
-                </div>
-            </div>
-
-            <!-- Contacted -->
-            <div class="kanban-column">
-                <div class="kanban-header">
-                    <span>Contacted</span>
-                    <span style="background: rgba(245,158,11,0.2); padding: 2px 8px; border-radius: 12px; font-size: 12px; color: #fbbf24;">2</span>
-                </div>
-                <div class="kanban-card glass">
-                    <h4>Sneha Desai</h4>
-                    <p>Shared brochure for Lotus Heights. Call back tomorrow.</p>
-                    <div style="margin-top: 8px; font-size: 12px; color: var(--warning);">Follow up: 10:00 AM</div>
-                </div>
-                <div class="kanban-card glass">
-                    <h4>Rajat Sharma</h4>
-                    <p>Site visit scheduled for Skyline.</p>
-                    <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Follow up: Friday</div>
-                </div>
-            </div>
-
-            <!-- Negotiation -->
-            <div class="kanban-column">
-                <div class="kanban-header">
-                    <span>Negotiation</span>
-                    <span style="background: rgba(139,92,246,0.2); padding: 2px 8px; border-radius: 12px; font-size: 12px; color: #a78bfa;">1</span>
-                </div>
-                <div class="kanban-card glass">
-                    <h4>Priya Patel</h4>
-                    <p>Discussing price for Skyline Apartments. Offered 80L.</p>
-                    <div style="margin-top: 8px; font-size: 12px; color: var(--success);">Hot Lead</div>
-                </div>
-            </div>
-            
-            <!-- Closed -->
-            <div class="kanban-column">
-                <div class="kanban-header">
-                    <span>Closed (Recent)</span>
-                    <span style="background: rgba(16,185,129,0.2); padding: 2px 8px; border-radius: 12px; font-size: 12px; color: #34d399;">2</span>
-                </div>
-                <div class="kanban-card glass" style="opacity: 0.7;">
-                    <h4>Rahul Sharma</h4>
-                    <p>Sunset Villas #42</p>
-                    <div style="margin-top: 8px; font-size: 12px; color: var(--success);">Closed for 1.2Cr</div>
-                </div>
-                <div class="kanban-card glass" style="opacity: 0.7;">
-                    <h4>Neha Gupta</h4>
-                    <p>Palm Grove Estate</p>
-                    <div style="margin-top: 8px; font-size: 12px; color: var(--success);">Closed for 1.5Cr</div>
-                </div>
-            </div>
+        <div class="panel glass" style="padding: 0; overflow: hidden;">
+            <table class="data-table" id="leadsTable" style="margin: 0; width: 100%;">
+                <thead style="background: rgba(0,0,0,0.02);">
+                    <tr>
+                        <th style="padding: 16px 24px;">Name</th>
+                        <th style="padding: 16px 24px;">Contact Info</th>
+                        <th style="padding: 16px 24px;">Requirements</th>
+                        <th style="padding: 16px 24px;">Status</th>
+                        <th style="padding: 16px 24px;">Added</th>
+                    </tr>
+                </thead>
+                <tbody id="leadsTableBody">
+                    <tr>
+                        <td style="padding: 16px 24px;"><strong>Vikram Singh</strong></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">-</td>
+                        <td style="padding: 16px 24px;">Looking for a 3BHK in Andheri West. Budget ~2.5Cr.</td>
+                        <td style="padding: 16px 24px;"><span class="status-badge" style="background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid rgba(59,130,246,0.2);">New Lead</span></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">2h ago</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 16px 24px;"><strong>Meera Reddy</strong></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">-</td>
+                        <td style="padding: 16px 24px;">Interested in commercial space.</td>
+                        <td style="padding: 16px 24px;"><span class="status-badge" style="background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid rgba(59,130,246,0.2);">New Lead</span></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">5h ago</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 16px 24px;"><strong>Anil Kapoor</strong></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">-</td>
+                        <td style="padding: 16px 24px;">Wants to sell 2BHK flat.</td>
+                        <td style="padding: 16px 24px;"><span class="status-badge" style="background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid rgba(59,130,246,0.2);">New Lead</span></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">1d ago</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 16px 24px;"><strong>Sneha Desai</strong></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">-</td>
+                        <td style="padding: 16px 24px;">Shared brochure for Lotus Heights. Call back tomorrow.</td>
+                        <td style="padding: 16px 24px;"><span class="status-badge status-pending">Contacted</span></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">2d ago</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 16px 24px;"><strong>Rajat Sharma</strong></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">-</td>
+                        <td style="padding: 16px 24px;">Site visit scheduled for Skyline.</td>
+                        <td style="padding: 16px 24px;"><span class="status-badge status-pending">Contacted</span></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">3d ago</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 16px 24px;"><strong>Priya Patel</strong></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">-</td>
+                        <td style="padding: 16px 24px;">Discussing price for Skyline Apartments. Offered 80L.</td>
+                        <td style="padding: 16px 24px;"><span class="status-badge" style="background: rgba(139,92,246,0.1); color: #8b5cf6; border: 1px solid rgba(139,92,246,0.2);">Negotiation</span></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">1w ago</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 16px 24px;"><strong>Rahul Sharma</strong></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">-</td>
+                        <td style="padding: 16px 24px;">Sunset Villas #42</td>
+                        <td style="padding: 16px 24px;"><span class="status-badge status-active">Closed</span></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">2w ago</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 16px 24px;"><strong>Neha Gupta</strong></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">-</td>
+                        <td style="padding: 16px 24px;">Palm Grove Estate</td>
+                        <td style="padding: 16px 24px;"><span class="status-badge status-active">Closed</span></td>
+                        <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">1m ago</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 
@@ -219,29 +217,23 @@
             }
 
             let extraInfo = [];
-            if (city) extraInfo.push(city);
             if (phone) extraInfo.push(phone);
             if (email) extraInfo.push(email);
-            let extraStr = extraInfo.join(' • ');
+            if (city) extraInfo.push(city);
+            let extraStr = extraInfo.join('<br>') || '-';
             
-            const newCard = document.createElement('div');
-            newCard.className = 'kanban-card glass';
-            newCard.innerHTML = `
-                <h4>${name}</h4>
-                <p>${details || 'No details provided.'}</p>
-                ${extraStr ? `<div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary); font-weight: 500; overflow-wrap: break-word;">${extraStr}</div>` : ''}
-                <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">Added just now</div>
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td style="padding: 16px 24px;"><strong>${name}</strong></td>
+                <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">${extraStr}</td>
+                <td style="padding: 16px 24px;">${details || '-'}</td>
+                <td style="padding: 16px 24px;"><span class="status-badge" style="background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid rgba(59,130,246,0.2);">New Lead</span></td>
+                <td style="padding: 16px 24px; color: var(--text-secondary); font-size: 13px;">Just now</td>
             `;
             
-            // Add the new card to the first kanban column ("New Leads")
-            const newLeadsColumn = document.querySelector('.kanban-column');
-            newLeadsColumn.appendChild(newCard);
-
-            // Update the count badge
-            const countBadge = newLeadsColumn.querySelector('.kanban-header span:last-child');
-            if (countBadge) {
-                countBadge.textContent = parseInt(countBadge.textContent) + 1;
-            }
+            // Add the new row to the table
+            const tbody = document.getElementById('leadsTableBody');
+            tbody.insertBefore(newRow, tbody.firstChild);
 
             closeModal();
         });
